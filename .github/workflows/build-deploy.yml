@@ -1,0 +1,58 @@
+name: Build, Test and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+      
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/app:${{ github.sha }} .
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+        
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+      
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/app:${{ env.IMAGE_TAG }}
+    
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=my-app
+          -Dsonar.projectName=MyApp
+          -Dsonar.java.binaries=target/classes
+          
+    - name: Update Helm Chart
+      uses: actions/github-script@v6
+      with:
+        script: |
+          await github.rest.actions.createWorkflowDispatch({
+            owner: 'YOUR-ORG',
+            repo: 'infra-repo',
+            workflow_id: 'update-helm.yaml',
+            ref: 'main',
+            inputs: {
+              image_tag: process.env.IMAGE_TAG,
+              build_number: process.env.GITHUB_RUN_NUMBER
+            }
+          })

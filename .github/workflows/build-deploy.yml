@@ -11,25 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-    
+
     - name: Build with Maven
       run: mvn clean package -DskipTests
-      
+
     - name: Build Docker image
+      # Correctly reference DOCKER_HUB_USERNAME secret
       run: |
         docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/app:${{ github.sha }} .
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-        
+
     - name: Login to Docker Hub
+      # Correctly reference DOCKER_HUB_TOKEN and DOCKER_HUB_USERNAME secrets
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-      
+
     - name: Push Docker image
+      # Correctly reference DOCKER_HUB_USERNAME secret
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/app:${{ env.IMAGE_TAG }}
     
    # - name: SonarQube Scan

@@ -12,14 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
+     - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        java-version: '17'
-        distribution: 'temurin'
+        node-version: '18' # Or your specific Node.js version (e.g., '16', '20')
 
-    - name: Build with Maven
-      run: mvn clean package -DskipTests
+    # Install backend and/or frontend dependencies
+    # Assuming your package.json is in the root. Adjust if it's in a subfolder (e.g., 'backend/package.json')
+    - name: Install Dependencies
+      run: npm ci # 'npm ci' is preferred for CI/CD as it's faster and more reliable than 'npm install'
 
     - name: Build Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret

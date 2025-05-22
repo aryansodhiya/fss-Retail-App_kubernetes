@@ -25,7 +25,7 @@ jobs:
     - name: Build Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
       run: 
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} .
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ github.sha }} .
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 #change in image name
     - name: Login to Docker Hub
@@ -34,7 +34,7 @@ jobs:
 
     - name: Push Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ env.IMAGE_TAG }}
     
    # - name: SonarQube Scan
     #  uses: SonarSource/sonarqube-scan-action@master

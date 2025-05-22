@@ -1,6 +1,6 @@
 name: Build, Test and Deploy
 
-on:
+on: 
   push:
     branches: [ main ]
   pull_request:

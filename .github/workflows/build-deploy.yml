@@ -33,7 +33,7 @@ jobs:
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
       
 #change in image name
-    - name: Login to Docker Hub
+    - name: Login to  Docker Hub
       # Correctly reference DOCKER_HUB_TOKEN and DOCKER_HUB_USERNAME secrets
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
       

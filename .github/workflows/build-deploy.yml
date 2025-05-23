@@ -24,12 +24,12 @@ jobs:
     - name: Debug DOCKER_HUB_USERNAME
       run: |
         echo "Attempting to use Docker Hub Username: '${{ secrets.DOCKER_HUB_USERNAME }}'"
-        echo "Full build tag will be: '${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ github.sha }}'"
+        echo "Full build tag will be: '${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}'"
 
     - name: Build Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
       run: |
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ github.sha }} .
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} .
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
       
 #change in image name

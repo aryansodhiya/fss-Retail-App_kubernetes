@@ -27,14 +27,12 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ github.sha }} .
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-      env:
-        DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}
+      
 #change in image name
     - name: Login to Docker Hub
       # Correctly reference DOCKER_HUB_TOKEN and DOCKER_HUB_USERNAME secrets
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-      env:
-        DOCKER_HUB_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}
+      
     - name: Push Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ env.IMAGE_TAG }}

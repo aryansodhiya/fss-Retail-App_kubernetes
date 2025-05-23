@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend-app:
-    image: aryansodhiya12122001/fss-retail-app_kubernetes:02ae85976128af54654f642e2622fca2c8866f02
+    image: aryansodhiya12122001/fss-retail-app_kubernetes:62827215a6350b880a3838f95a7765f1f7433792
     container_name: frontend-cont 
     ports:
       - '3130:3130'

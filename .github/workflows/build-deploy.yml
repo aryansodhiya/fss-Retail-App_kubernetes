@@ -29,7 +29,8 @@ jobs:
     - name: Build  Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
       run: |
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} .
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} \
+                     -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest .
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
       
 #change in image name

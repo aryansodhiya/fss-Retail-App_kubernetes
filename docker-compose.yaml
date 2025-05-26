@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend-app:
-    build: . 
+    image: aryansodhiya12122001/fss-retail-app_kubernetes:b5db841bcaa8ba773191bbd80efd61ed732e3f8d
     container_name: frontend-cont 
     ports:
       - '3130:3130'
@@ -18,3 +18,6 @@ services:
     image: mongo:latest 
     ports:
       - '27017:27017'
+    container_name: mongodb-cont  
+    volumes:                      
+      - ./data:/data/db  

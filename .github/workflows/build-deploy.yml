@@ -40,7 +40,9 @@ jobs:
       
     - name: Push Docker image
       # Correctly reference DOCKER_HUB_USERNAME secret
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
+      run: |
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
     
    # - name: SonarQube Scan
     #  uses: SonarSource/sonarqube-scan-action@master

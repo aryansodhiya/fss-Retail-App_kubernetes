@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend-app:
-    image: aryansodhiya12122001/fss-retail-app_kubernetes:b5db841bcaa8ba773191bbd80efd61ed732e3f8d
+    image: aryansodhiya12122001/fss-retail-app_kubernetes:latest # <--- CHANGE THIS LINE
     container_name: frontend-cont 
     ports:
       - '3130:3130'

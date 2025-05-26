@@ -43,6 +43,19 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
+    # Add this as a new job, or as a step within your existing build job
+# Make sure this runs after your dependencies are installed
+    - name: SonarQube Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        projectBaseDir: . # Or the path to your source code if not root
+        args: >
+          -Dsonar.projectKey=fss-Retail-App_kubernetes
+          -Dsonar.organization=aryansodhiya12122001 # If using SonarCloud, or your local instance's org
+          -Dsonar.sources=.
+          -Dsonar.host.url=http://localhost:9000 # Replace with your SonarQube URL if not running locally    
     
    # - name: SonarQube Scan
     #  uses: SonarSource/sonarqube-scan-action@master

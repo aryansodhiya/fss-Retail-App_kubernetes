@@ -1,13 +1,13 @@
 name: Build, Test and Deploy
 
-on: 
+on:
   push:
-    branches: [ master]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
+  build-and-test: # Renamed job to reflect both build and test phases
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,34 +17,14 @@ jobs:
       with:
         node-version: '18' # Or your specific Node.js version (e.g., '16', '20')
 
-    # Install backend and/or frontend dependencies
-    # Assuming your package.json is in the root. Adjust if it's in a subfolder (e.g., 'backend/package.json')
     - name: Install Dependencies
       run: npm ci # 'npm ci' is preferred for CI/CD as it's faster and more reliable than 'npm install'
-    - name: Debug DOCKER_HUB_USERNAME
-      run: |
-        echo "Attempting to use Docker Hub Username: '${{ secrets.DOCKER_HUB_USERNAME }}'"
-        echo "Full build tag will be: '${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}'"
 
-    - name: Build  Docker image
-      # Correctly reference DOCKER_HUB_USERNAME secret
-      run: |
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} \
-                     -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest .
-        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-      
-#change in image name
-    - name: Login to  Docker Hub
-      # Correctly reference DOCKER_HUB_TOKEN and DOCKER_HUB_USERNAME secrets
-      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-      
-    - name: Push Docker image
-      # Correctly reference DOCKER_HUB_USERNAME secret
-      run: |
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
-    # Add this as a new job, or as a step within your existing build job
-# Make sure this runs after your dependencies are installed
+    # --- Testing Phase ---
+    # Assuming you have a 'test' script in your package.json
+      # You might want to add options like '--forceExit' if your tests don't exit cleanly
+      # For example: run: npm test -- --forceExit
+
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5.0.0
       env:
@@ -55,29 +35,97 @@ jobs:
           -Dsonar.projectKey=fss-Retail-App_kubernetes
           -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
           -Dsonar.sources=.
-          # Replace with your SonarQube URL if not running locally    
-    
-   # - name: SonarQube Scan
-    #  uses: SonarSource/sonarqube-scan-action@master
-     # env:
-        #SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-   #   with:
-      #  args: >
-       #   -Dsonar.projectKey=my-app
-        #  -Dsonar.projectName=MyApp
-          #-Dsonar.java.binaries=target/classes
-          
-    #- name: Update Helm Chart
-    #  uses: actions/github-script@v6
-     # with:
-      #  script: |
-      #    await github.rest.actions.createWorkflowDispatch({
-       #     owner: 'YOUR-ORG',
-        #    repo: 'infra-repo',
-         #   workflow_id: 'update-helm.yaml',
-         #   ref: 'main',
-          #  inputs: {
-             # image_tag: process.env.IMAGE_TAG,
-            #  build_number: process.env.GITHUB_RUN_NUMBER
-          #  }
-        #  })
+          -Dsonar.branch.name=master
+          -Dsonar.scm.provider=git
+          # If you have a SonarQube server URL:
+          # -Dsonar.host.url=<YOUR_SONARQUBE_SERVER_URL>
+          # Example for SonarCloud: -Dsonar.host.url=https://sonarcloud.io
+
+    # --- Docker Build & Push Phase ---
+    - name: Debug DOCKER_HUB_USERNAME
+      run: |
+        echo "Attempting to use Docker Hub Username: '${{ secrets.DOCKER_HUB_USERNAME }}'"
+        echo "Full build tag will be: '${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}'"
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }} \
+                     -t ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest .
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV # Set an environment variable for the tag
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
+
+  # --- Deployment Job ---
+  #deploy:
+    #runs-on: ubuntu-latest
+    #needs: build-and-test # This job depends on the successful completion of the 'build-and-test' job
+    #if: github.ref == 'refs/heads/master' # Only deploy when pushing to the master branch
+
+    #steps:
+    #- uses: actions/checkout@v3
+
+    # --- Kubernetes Deployment Example ---
+    # This section assumes you want to deploy to a Kubernetes cluster.
+    # You'll need to adjust this based on your actual deployment strategy.
+
+    #- name: Install kubectl
+      #uses: azure/setup-kubectl@v3
+      #with:
+       #version: 'v1.28.0' # Or your desired kubectl version
+
+    #- name: Configure Kubeconfig
+      #run: |
+        # This is a generic example. You'll need to securely store your Kubeconfig
+        # as a GitHub Secret (e.g., KUBE_CONFIG_BASE64) and decode it.
+        # NEVER hardcode sensitive information.
+        #echo "${{ secrets.KUBE_CONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
+        #chmod 600 ~/.kube/config # Set appropriate permissions
+
+    #- name: Update Kubernetes Deployment Image
+      # This step assumes you have a Kubernetes deployment manifest (e.g., deployment.yaml)
+      # and you want to update the image tag.
+      #run: |
+        # Example using sed to update the image tag in a YAML file.
+        # Adjust 'your-deployment-name' and 'your-container-name'
+        # This is a basic example; for more complex deployments, consider Kustomize, Helm, or specialized actions.
+        #sed -i "s|image: .*/fss-retail-app_kubernetes:.*|image: ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}|" kubernetes/deployment.yaml # Adjust path if needed
+        #cat kubernetes/deployment.yaml # For debugging: show the updated file
+
+    #- name: Apply Kubernetes Deployment
+      #run: kubectl apply -f kubernetes/ # Apply all manifests in the kubernetes/ directory
+      #env:
+        # If your Kubernetes cluster requires specific environment variables for authentication, add them here.
+        #KUBECONFIG: ~/.kube/config # Ensure kubectl uses the decoded config file
+
+    # --- Alternative Deployment (e.g., SSH, Heroku, AWS ECS/EKS, Azure AKS) ---
+    # You would replace the Kubernetes steps with actions specific to your deployment target.
+    # Examples:
+    # - If deploying via SSH:
+    #   - uses: appleboy/ssh-action@master
+    #     with:
+    #       host: ${{ secrets.SSH_HOST }}
+    #       username: ${{ secrets.SSH_USERNAME }}
+    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #       script: |
+    #         cd /path/to/your/app
+    #         docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
+    #         docker stop your-app-container || true
+    #         docker rm your-app-container || true
+    #         docker run -d --name your-app-container -p 80:3000 ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
+
+    # - If deploying to AWS EKS/ECS, you'd use AWS-specific actions like configure-aws-credentials, ecr-login, etc.
+    #   - uses: aws-actions/configure-aws-credentials@v1
+    #     with:
+    #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #       aws-region: your-aws-region
+    #   - name: Update EKS Kubeconfig
+    #     run: aws eks update-kubeconfig --name your-eks-cluster-name --region your-aws-region
+    #   - name: Deploy to EKS
+    #     run: kubectl apply -f your-eks-deployment.yaml

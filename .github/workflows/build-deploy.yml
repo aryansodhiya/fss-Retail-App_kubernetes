@@ -55,6 +55,8 @@ jobs:
           -Dsonar.projectKey=fss-Retail-App_kubernetes
           -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
           -Dsonar.sources=.
+          -Dsonar.branch.name=master # <--- ADD THIS LINE
+          -Dsonar.scm.provider=git   # <--- ADD THIS LINE
           # Replace with your SonarQube URL if not running locally    
     
    # - name: SonarQube Scan

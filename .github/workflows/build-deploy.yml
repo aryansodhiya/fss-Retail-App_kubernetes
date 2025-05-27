@@ -55,7 +55,7 @@ jobs:
           -Dsonar.projectKey=fss-Retail-App_kubernetes
           -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
           -Dsonar.sources=.
-          -Dsonar.host.url=http://localhost:9000 # Replace with your SonarQube URL if not running locally    
+          # Replace with your SonarQube URL if not running locally    
     
    # - name: SonarQube Scan
     #  uses: SonarSource/sonarqube-scan-action@master

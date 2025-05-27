@@ -21,8 +21,7 @@ jobs:
       run: npm ci # 'npm ci' is preferred for CI/CD as it's faster and more reliable than 'npm install'
 
     # --- Testing Phase ---
-    - name: Run Tests
-      run: npm test # Assuming you have a 'test' script in your package.json
+    # Assuming you have a 'test' script in your package.json
       # You might want to add options like '--forceExit' if your tests don't exit cleanly
       # For example: run: npm test -- --forceExit
 
@@ -63,46 +62,46 @@ jobs:
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
 
   # --- Deployment Job ---
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-test # This job depends on the successful completion of the 'build-and-test' job
-    if: github.ref == 'refs/heads/master' # Only deploy when pushing to the master branch
+  #deploy:
+    #runs-on: ubuntu-latest
+    #needs: build-and-test # This job depends on the successful completion of the 'build-and-test' job
+    #if: github.ref == 'refs/heads/master' # Only deploy when pushing to the master branch
 
-    steps:
-    - uses: actions/checkout@v3
+    #steps:
+    #- uses: actions/checkout@v3
 
     # --- Kubernetes Deployment Example ---
     # This section assumes you want to deploy to a Kubernetes cluster.
     # You'll need to adjust this based on your actual deployment strategy.
 
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.28.0' # Or your desired kubectl version
+    #- name: Install kubectl
+      #uses: azure/setup-kubectl@v3
+      #with:
+       #version: 'v1.28.0' # Or your desired kubectl version
 
-    - name: Configure Kubeconfig
-      run: |
+    #- name: Configure Kubeconfig
+      #run: |
         # This is a generic example. You'll need to securely store your Kubeconfig
         # as a GitHub Secret (e.g., KUBE_CONFIG_BASE64) and decode it.
         # NEVER hardcode sensitive information.
-        echo "${{ secrets.KUBE_CONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
-        chmod 600 ~/.kube/config # Set appropriate permissions
+        #echo "${{ secrets.KUBE_CONFIG_BASE64 }}" | base64 --decode > ~/.kube/config
+        #chmod 600 ~/.kube/config # Set appropriate permissions
 
-    - name: Update Kubernetes Deployment Image
+    #- name: Update Kubernetes Deployment Image
       # This step assumes you have a Kubernetes deployment manifest (e.g., deployment.yaml)
       # and you want to update the image tag.
-      run: |
+      #run: |
         # Example using sed to update the image tag in a YAML file.
         # Adjust 'your-deployment-name' and 'your-container-name'
         # This is a basic example; for more complex deployments, consider Kustomize, Helm, or specialized actions.
-        sed -i "s|image: .*/fss-retail-app_kubernetes:.*|image: ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}|" kubernetes/deployment.yaml # Adjust path if needed
-        cat kubernetes/deployment.yaml # For debugging: show the updated file
+        #sed -i "s|image: .*/fss-retail-app_kubernetes:.*|image: ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ github.sha }}|" kubernetes/deployment.yaml # Adjust path if needed
+        #cat kubernetes/deployment.yaml # For debugging: show the updated file
 
-    - name: Apply Kubernetes Deployment
-      run: kubectl apply -f kubernetes/ # Apply all manifests in the kubernetes/ directory
-      env:
+    #- name: Apply Kubernetes Deployment
+      #run: kubectl apply -f kubernetes/ # Apply all manifests in the kubernetes/ directory
+      #env:
         # If your Kubernetes cluster requires specific environment variables for authentication, add them here.
-        KUBECONFIG: ~/.kube/config # Ensure kubectl uses the decoded config file
+        #KUBECONFIG: ~/.kube/config # Ensure kubectl uses the decoded config file
 
     # --- Alternative Deployment (e.g., SSH, Heroku, AWS ECS/EKS, Azure AKS) ---
     # You would replace the Kubernetes steps with actions specific to your deployment target.

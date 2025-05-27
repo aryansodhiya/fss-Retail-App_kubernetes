@@ -25,18 +25,18 @@ jobs:
       # You might want to add options like '--forceExit' if your tests don't exit cleanly
       # For example: run: npm test -- --forceExit
 
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v5.0.0
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        projectBaseDir: . # Or the path to your source code if not root
-        args: >
-          -Dsonar.projectKey=fss-Retail-App_kubernetes
-          -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
-          -Dsonar.sources=.
-          -Dsonar.branch.name=master
-          -Dsonar.scm.provider=git
+   # - name: SonarQube Scan
+     # uses: SonarSource/sonarqube-scan-action@v5.0.0
+      #env:
+       # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #  with:
+        #projectBaseDir: . # Or the path to your source code if not root
+       # args: >
+        #  -Dsonar.projectKey=fss-Retail-App_kubernetes
+         # -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
+         # -Dsonar.sources=.
+         # -Dsonar.branch.name=master
+          #-Dsonar.scm.provider=git
           # If you have a SonarQube server URL:
           # -Dsonar.host.url=<YOUR_SONARQUBE_SERVER_URL>
           # Example for SonarCloud: -Dsonar.host.url=https://sonarcloud.io

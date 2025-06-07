@@ -58,16 +58,16 @@ jobs:
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
 
 # --- EKS Deployment Steps ---
-      - name: Configure AWS Credentials
+    - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::238287277510:role/fss-retail-app_kubernetes # Your IAM Role ARN
           aws-region: YOUR_AWS_REGION # <-- IMPORTANT: Replace with your EKS cluster's region (e.g., ap-south-1, us-east-1)
 
-      - name: Install kubectl
+    - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
-      - name: Update Kubeconfig for EKS
+    - name: Update Kubeconfig for EKS
         run: |
           aws eks update-kubeconfig --name fss-Retail-App_kubernetes --region ap-south-1
  # <-- IMPORTANT: Replace with your EKS CLUSTER NAME & REGION
@@ -75,7 +75,7 @@ jobs:
           kubectl config view --minify
           kubectl get nodes
 
-      - name: Deploy to EKS
+    - name: Deploy to EKS
         run: |
           # Dynamically update the image tag in deployment.yaml
           yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ env.IMAGE_TAG }}"' -i k8s/deployment.yaml

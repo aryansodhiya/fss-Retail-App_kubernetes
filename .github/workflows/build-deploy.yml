@@ -19,6 +19,14 @@ jobs:
 
     - name: Install Dependencies
       run: npm ci # 'npm ci' is preferred for CI/CD as it's faster and more reliable than 'npm install'
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # <--- ADD THIS LINE
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3    
 
 
 #<<<<<<< HEAD

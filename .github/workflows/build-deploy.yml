@@ -66,7 +66,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-          role-to-assume: arn:aws:iam::238287277510:role/fss-retail-app_kubernetes # Your IAM Role ARN
+          role-to-assume: arn:aws:iam::238287277510:role/fss-retail-app_kubernetes-2 # Your IAM Role ARN
           aws-region: ap-south-1 # <-- IMPORTANT: Replace with your EKS cluster's region (e.g., ap-south-1, us-east-1)
 
     - name: Install kubectl

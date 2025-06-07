@@ -21,6 +21,24 @@ jobs:
       run: npm ci # 'npm ci' is preferred for CI/CD as it's faster and more reliable than 'npm install'
 
 
+<<<<<<< HEAD
+=======
+   # - name: SonarQube Scan
+     # uses: SonarSource/sonarqube-scan-action@v5.0.0
+      #env:
+       # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #  with:
+        #projectBaseDir: . # Or the path to your source code if not root
+       # args: >
+        #  -Dsonar.projectKey=fss-Retail-App_kubernetes
+         # -Dsonar.organization=aryansodhiya # If using SonarCloud, or your local instance's org
+         # -Dsonar.sources=.
+         # -Dsonar.branch.name=master
+          #-Dsonar.scm.provider=git
+          # If you have a SonarQube server URL:
+          # -Dsonar.host.url=<YOUR_SONARQUBE_SERVER_URL>
+          # Example for SonarCloud: -Dsonar.host.url=https://sonarcloud.io
+>>>>>>> df0fc33b867d264e07530039446c25ceea11d87f
 
     # --- Docker Build & Push Phase ---
     

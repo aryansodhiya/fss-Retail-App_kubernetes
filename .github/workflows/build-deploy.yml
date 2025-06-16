@@ -5,13 +5,15 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+    
+permissions:  # <--- Here, 'permissions' is at the top level, same as 'name' and 'on'
+  id-token: write
+  contents: read
+  
 jobs:
   build-and-test: # Renamed job to reflect both build and test phases
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # <--- ADD THIS LINE
-      contents: read
+    runs-on: ubuntu-latest # <--- ADD THIS LINE
+      
     steps:
     - uses: actions/checkout@v3
     - name: Setup Node.js

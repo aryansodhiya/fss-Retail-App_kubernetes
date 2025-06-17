@@ -84,7 +84,7 @@ jobs:
     - name: Deploy to EKS
       run: |
           # Dynamically update the image tag in deployment.yaml
-          yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
+          yq e 'select(.kind == "Deployment").spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
 
           echo "Applying Kubernetes manifests..."
           kubectl apply -f mongodb-deployment.yml

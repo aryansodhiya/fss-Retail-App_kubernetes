@@ -90,7 +90,7 @@ jobs:
           kubectl apply -f mongodb-deployment.yml
           kubectl apply -f mongodb-service.yml
           kubectl apply -f usernode-js-service.yml # Keep this if it's a separate service file in your root
-          kubectl apply -f userprofile-deployment.yaml # This contains your main app deployment and its service
+          kubectl apply -f userprofile-deployment.yml # This contains your main app deployment and its service
     
           echo "Deployment successful!"
 

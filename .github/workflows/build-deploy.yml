@@ -87,7 +87,11 @@ jobs:
           yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
 
           echo "Applying Kubernetes manifests..."
-          kubectl apply -f k8s/
+          kubectl apply -f mongodb-deployment.yml
+          kubectl apply -f mongodb-service.yml
+          kubectl apply -f usernode-js-service.yml # Keep this if it's a separate service file in your root
+          kubectl apply -f userprofile.yaml # This contains your main app deployment and its service
+    
           echo "Deployment successful!"
 
 

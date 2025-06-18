@@ -10,3 +10,9 @@
 .terraform.lock.hcl
 *.tfplan
 .terraform/plugins/
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.tfplan
+.terraform/plugins/

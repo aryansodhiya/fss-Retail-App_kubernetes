@@ -1,0 +1,117 @@
+body {
+  font-family: 'Roboto', sans-serif; /* Stylish font */
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: #27ae60; /* Vibrant green color */
+  color: #fff;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header .brand {
+  text-align: center;
+}
+
+header .brand h1 {
+  margin: 0;
+  font-size: 36px;
+  font-family: 'Montserrat', sans-serif; /* Bold and clean font */
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+  margin: 20px 0 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #f39c12; /* Orange hover effect */
+}
+
+.main-banner {
+  background-image: url('../images/IndexBG.jpg'); /* Replace with a services-related image */
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 80px 0;
+  text-align: center;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark transparent overlay */
+}
+
+.main-banner h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  font-family: 'Lobster', cursive; /* Fancy font for heading */
+}
+
+.main-banner p {
+  font-size: 24px;
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.services-content {
+  padding: 60px;
+  background-color: #fff;
+ 
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.services-content .service-item {
+  background-color: #ecf0f1;
+  border-radius: 10px;
+  padding: 40px;
+  width: 30%;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.services-content .service-item:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.services-content h3 {
+  font-size: 28px;
+  color: #27ae60;
+  margin-bottom: 20px;
+}
+
+.services-content p {
+  font-size: 18px;
+  color: #34495e;
+}
+
+footer {
+  background-color: #27ae60;
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 0px;
+}
+
+footer p {
+  margin: 0;
+}

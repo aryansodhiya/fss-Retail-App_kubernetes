@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biscuits - FreshMart</title>
+  <link rel="stylesheet" href="/views/biscuits.css"> <!-- Updated path -->
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>FreshMart</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="cooking-oils.html">Cooking Oils</a></li>
+        <li><a href="fruits-vegetables.html">Fruits & Vegetables</a></li>
+        <li><a href="dals.html">Dals</a></li>
+        <li><a href="biscuits.html">Biscuits</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="main-banner">
+    <h2>Our Biscuits</h2>
+    <p>We offer a wide range of biscuits from popular brands as well as fresh, locally made ones.</p>
+  </section>
+
+  <section class="product-container">
+    <div class="product-card">
+      <img src="/images/choco-chip-cookies.jpg" alt="Choco Chip Cookies">
+      <h3>Choco Chip Cookies</h3>
+      <p class="quantity">Quantity: 200g</p>
+      <p class="price">$4.99</p>
+      <form action="cart.html" method="get">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/oatmeal-cookies.jpg" alt="Oatmeal Cookies">
+      <h3>Oatmeal Cookies</h3>
+      <p class="quantity">Quantity: 250g</p>
+      <p class="price">$5.49</p>
+      <form action="cart.html" method="get">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/cream-biscuits.jpg" alt="Cream Biscuits">
+      <h3>Cream Biscuits</h3>
+      <p class="quantity">Quantity: 300g</p>
+      <p class="price">$3.99</p>
+      <form action="cart.html" method="get">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/butter-biscuits.jpg" alt="Butter Biscuits">
+      <h3>Butter Biscuits</h3>
+      <p class="quantity">Quantity: 250g</p>
+      <p class="price">$4.49</p>
+      <form action="cart.html" method="get">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <!-- Add more product cards as needed -->
+  </section>
+
+  <footer>
+    <p>&copy; 2024 FreshMart. All Rights Reserved.</p>
+  </footer>
+  <script src="/Javascripts/script.js"></script> <!-- Updated path -->
+</body>
+</html>

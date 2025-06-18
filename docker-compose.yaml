@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  frontend-app:
+    image: aryansodhiya12122001/fss-retail-app_kubernetes:latest # <--- CHANGE THIS LINE
+    container_name: frontend-cont 
+    ports:
+      - '3130:3130'
+    depends_on:
+      - mongodb  
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/myDatabase
+      - SESSION_SECRET=1234
+      - PORT=3130
+      - EMAIL_USER=chagantyteja2502@gmail.com
+      - EMAIL_PASS=yxoq bjuk rdnt alzp
+  mongodb:
+    image: mongo:latest 
+    ports:
+      - '27017:27017'
+    container_name: mongodb-cont
+    volumes:                      
+      # <--- Ensure this line is present and correctly i
+      - ./data:/data/db  

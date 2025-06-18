@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dals - FreshMart</title>
+  <link rel="stylesheet" href="/views/Dals.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>FreshMart</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="cooking-oils.html">Cooking Oils</a></li>
+        <li><a href="fruits-vegetables.html">Fruits & Vegetables</a></li>
+        <li><a href="biscuits.html">Biscuits</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="main-banner">
+    <h2>Our Dals</h2>
+    <p>We stock a variety of dals including lentils, split peas, chickpeas, and more. All are available fresh and in bulk.</p>
+  </section>
+
+  <section class="product-container">
+    <div class="product-card">
+      <img src="/images/lentils.jpg" alt="Lentils">
+      <h3>Lentils</h3>
+      <p class="quantity">Quantity: 500g</p>
+      <p class="price">$3.99</p>
+      <form onsubmit="addToCart({ name: 'Lentils', price: 3.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/split-peas.jpg" alt="Split Peas">
+      <h3>Split Peas</h3>
+      <p class="quantity">Quantity: 500g</p>
+      <p class="price">$4.49</p>
+      <form onsubmit="addToCart({ name: 'Split Peas', price: 4.49, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/chickpeas.jpg" alt="Chickpeas">
+      <h3>Chickpeas</h3>
+      <p class="quantity">Quantity: 500g</p>
+      <p class="price">$5.99</p>
+      <form onsubmit="addToCart({ name: 'Chickpeas', price: 5.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/urad-dal.jpg" alt="Urad Dal">
+      <h3>Urad Dal</h3>
+      <p class="quantity">Quantity: 500g</p>
+      <p class="price">$6.49</p>
+      <form onsubmit="addToCart({ name: 'Urad Dal', price: 6.49, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 FreshMart. All Rights Reserved.</p>
+  </footer>
+  <script src="/Javascripts/script.js"></script>
+</body>
+</html>

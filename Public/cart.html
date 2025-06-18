@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - FreshMart</title>
+  <link rel="stylesheet" href="/views/cart.css"> <!-- Path to your CSS file -->
+  <script src="/Javascripts/cart.js" defer></script> <!-- Path to your cart.js file -->
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>FreshMart</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="cooking-oils.html">Cooking Oils</a></li>
+        <li><a href="fruits-vegetables.html">Fruits & Vegetables</a></li>
+        <li><a href="dals.html">Dals</a></li>
+        <li><a href="biscuits.html">Biscuits</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items">
+      <!-- Cart items will be dynamically loaded here -->
+      <div class="cart-item">
+        <div class="item-info">
+          <div class="item-name">Product Name</div>
+          <div class="item-quantity">Quantity: 1</div>
+        </div>
+        <div class="item-details">
+          <span class="item-price">$20.00</span>
+          <button class="remove-button">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-total">
+      <p>Total: <span id="total-price">$0.00</span></p>
+      <button id="checkout-button">Checkout</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 FreshMart. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking Oils - FreshMart</title>
+  <link rel="stylesheet" href="/views/cooking-oils.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>FreshMart</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="fruits-vegetables.html">Fruits & Vegetables</a></li>
+        <li><a href="dals.html">Dals</a></li>
+        <li><a href="biscuits.html">Biscuits</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="main-banner">
+    <h2>Our Cooking Oils</h2>
+    <p>We provide a variety of oils including olive, sunflower, coconut, and more, to meet your cooking needs.</p>
+  </section>
+
+  <section class="product-container">
+    <div class="product-card">
+      <img src="/images/olive-oil.jpg" alt="Olive Oil">
+      <h3>Olive Oil</h3>
+      <p class="quantity">Quantity: 500ml</p>
+      <p class="price">$12.99</p>
+      <form onsubmit="addToCart({ name: 'Olive Oil', price: 12.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/sunflower-oil.jpg" alt="Sunflower Oil">
+      <h3>Sunflower Oil</h3>
+      <p class="quantity">Quantity: 1L</p>
+      <p class="price">$9.99</p>
+      <form onsubmit="addToCart({ name: 'Sunflower Oil', price: 9.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/coconut-oil.jpg" alt="Coconut Oil">
+      <h3>Coconut Oil</h3>
+      <p class="quantity">Quantity: 400ml</p>
+      <p class="price">$14.99</p>
+      <form onsubmit="addToCart({ name: 'Coconut Oil', price: 14.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+
+    <div class="product-card">
+      <img src="/images/avocado-oil.jpg" alt="Avocado Oil">
+      <h3>Avocado Oil</h3>
+      <p class="quantity">Quantity: 250ml</p>
+      <p class="price">$16.99</p>
+      <form onsubmit="addToCart({ name: 'Avocado Oil', price: 16.99, quantity: this.quantity.value }); return false;">
+        <input type="number" name="quantity" min="1" value="1" required>
+        <button type="submit">Add to Cart</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 FreshMart. All Rights Reserved.</p>
+  </footer>
+  <script src="/Javascripts/script.js"></script>
+</body>
+</html>

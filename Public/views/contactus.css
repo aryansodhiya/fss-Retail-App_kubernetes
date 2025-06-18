@@ -1,0 +1,116 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  padding-bottom: 70px; /* Added padding to prevent footer overlap */
+  background-image: url('../images/IndexBG.jpg'); /* Add a background image */
+  background-size: cover;
+}
+
+header {
+  background-color: #27ae60;
+  color: #fff;
+  padding: 15px 0;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header .brand h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #f39c12;
+}
+
+.contact-form {
+  padding: 20px;
+  max-width: 600px;
+  margin: 30px auto; /* Increased margin for better visibility */
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.contact-form h2 {
+  font-size: 24px;
+  color: #27ae60;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.contact-form button {
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.contact-form button:hover {
+  background-color: #2ecc71;
+}
+
+footer {
+  background-color: #27ae60;
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}

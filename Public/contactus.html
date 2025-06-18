@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - FreshMart</title>
+    <link rel="stylesheet" href="/views/contactus.css">
+    <script src="/Javascripts/contactus.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <h1>FreshMart</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="cooking-oils.html">Cooking Oils</a></li>
+                <li><a href="fruits-vegetables.html">Fruits & Vegetables</a></li>
+                <li><a href="dals.html">Dals</a></li>
+                <li><a href="biscuits.html">Biscuits</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-form">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <label for="issues">Issues:</label>
+            <select id="issues" name="issues" required>
+                <option value="">Select an issue</option>
+                <option value="delivery">Delivery Issue</option>
+                <option value="product">Product Issue</option>
+                <option value="payment">Payment Issue</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 FreshMart. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

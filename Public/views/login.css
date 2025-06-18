@@ -1,0 +1,127 @@
+/* Login Page Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../images/freshmartlogin.jpg'); /* Add a background image */
+    background-size: cover;
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+}
+
+header {
+    background-color: #1e90ff; /* Bright blue background */
+    color: #fff;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between; /* Space between brand and navigation */
+    align-items: center; /* Vertically align brand and nav */
+}
+
+header .brand h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Flex layout for nav items */
+}
+
+nav ul li {
+    margin-left: 1rem; /* Space between nav items */
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffd700; /* Gold color on hover */
+}
+
+.login-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+    margin-top: 0;
+    color: #1e90ff; /* Match header background */
+    text-align: center;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px; /* Rounded corners for input fields */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+}
+
+.login-form input:focus {
+    border-color: #1e90ff; /* Blue border on focus */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* Light blue shadow */
+}
+
+.login-form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #1e90ff; /* Matching blue button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem; /* Add space below each button */
+}
+
+#verify-otp {
+    margin-top: 1rem; /* Add space above the Verify OTP button */
+}
+
+
+.login-form button:hover {
+    background-color: #4682b4; /* Darker blue on hover */
+}
+
+#login-status {
+    color: #e74c3c; /* Red color for error messages */
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+footer {
+    background-color: #1e90ff; /* Matching blue footer */
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    margin-top: auto; /* Push footer to the bottom */
+}

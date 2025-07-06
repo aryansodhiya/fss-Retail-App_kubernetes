@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: usernode-js
-        image: saiteja2502/userprofileretail:latest
+        image: aryansodhiya12122001/fss-retail-app_kubernetes:latest
         ports:
         - containerPort: 3130  # Change to match your app's port
         env:

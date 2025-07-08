@@ -60,43 +60,66 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:latest
+    - name: Install yq
+      # yq is used to update YAML files from the command line
+      run: |
+        sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+        sudo chmod +x /usr/bin/yq
+
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Update image tag in values.yaml
+      run: |
+        # Use yq to update the image.tag field in values.yaml
+        yq e '.image.tag = "${{ env.IMAGE_TAG }}"' -i values.yaml
+        echo "Updated values.yaml:"
+        cat values.yaml # For debugging: show the updated file content
+
+    - name: Commit and Push values.yaml
+      run: |
+        git add values.yaml
+        git commit -m "chore(ci): Update image tag to ${{ env.IMAGE_TAG }}"
+        git push
 
 # --- EKS Deployment Steps ---
     # ... (previous steps like Build Docker image, Login to Docker Hub, Push Docker image) ...
 
       # --- EKS Deployment Steps ---
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-          role-to-assume: arn:aws:iam::238287277510:role/fss-Retail-App_kubernetes-2 # Your IAM Role ARN
-          aws-region: ap-south-1 # <-- IMPORTANT: Replace with your EKS cluster's region (e.g., ap-south-1, us-east-1)
+    #- name: Configure AWS Credentials
+     # uses: aws-actions/configure-aws-credentials@v4
+      #with:
+       #   role-to-assume: arn:aws:iam::238287277510:role/fss-Retail-App_kubernetes-2 # Your IAM Role ARN
+        #  aws-region: ap-south-1 # <-- IMPORTANT: Replace with your EKS cluster's #region (e.g., ap-south-1, us-east-1)
 
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v3
+ #   - name: Install kubectl
+  #    uses: azure/setup-kubectl@v3
 
-    - name: Update Kubeconfig for EKS
-      run: |
-          aws eks update-kubeconfig --name fss-Retail-App_kubernetes --region ap-south-1 # <-- IMPORTANT: Replace with your EKS CLUSTER NAME & REGION
-          echo "Kubeconfig updated. Testing connection:"
-          kubectl config view --minify
-          kubectl get nodes
+   # - name: Update Kubeconfig for EKS
+    #  run: |
+          aws eks update-kubeconfig --name fss-Retail-App_kubernetes --region #ap-#south-1 # <-- IMPORTANT: Replace with your EKS CLUSTER NAME & REGION
+ #         echo "Kubeconfig updated. Testing connection:"
+  #        kubectl config view --minify
+   #       kubectl get nodes
 
-    - name: Deploy to EKS
-      run: |
+    #- name: Deploy to EKS
+     # run: |
           # Dynamically update the image tag in deployment.yaml
 #<<<<<<< HEAD
-          yq e '.spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
+      #    yq e '.spec.template.spec.containers[0].image = #"${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app-kubernetes:##### #${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
 
-          echo "Applying Kubernetes manifests..."
-          kubectl apply -f userprofile-deployment.yml
+         # echo "Applying Kubernetes manifests..."
+          #kubectl apply -f userprofile-deployment.yml
 #=======
-          yq e 'select(.kind == "Deployment").spec.template.spec.containers[0].image = "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
+          #yq e 'select(.kind == "Deployment").spec.template.spec.containers[0].image #= "${{ secrets.DOCKER_HUB_USERNAME }}/fss-retail-app_kubernetes:###${{ env.IMAGE_TAG }}"' -i userprofile-deployment.yml
 
-          echo "Applying Kubernetes manifests..."
-          kubectl apply -f mongodb-deployment.yml
-          kubectl apply -f mongodb-service.yml
-          kubectl apply -f usernode-js-service.yml # Keep this if it's a separate service file in your root
-          kubectl apply -f userprofile-deployment.yml # This contains your main app deployment and its service
+          #echo "Applying Kubernetes manifests..."
+          #kubectl apply -f mongodb-deployment.yml
+          #kubectl apply -f mongodb-service.yml
+          #kubectl apply -f usernode-js-service.yml # Keep this if it's a separate #service file in your root
+ #         kubectl apply -f userprofile-deployment.yml # This contains your main app #deployment and its service
     
 #>>>>>>> 34d615d0fd67fb58af6ad3a111b2d6a13f4e575f
           echo "Deployment successful!"

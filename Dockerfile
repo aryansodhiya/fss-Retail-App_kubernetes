@@ -6,7 +6,7 @@ WORKDIR /Capsule
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY ../server.js .
 
 EXPOSE 3130  
 CMD ["npm", "start"]

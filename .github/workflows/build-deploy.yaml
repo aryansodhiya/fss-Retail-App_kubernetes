@@ -74,7 +74,7 @@ jobs:
     - name: Update image tag in values.yaml
       run: |
         # Use yq to update the image.tag field in values.yaml
-        yq e '.image.tag = env(IMAGE_TAG)' -i values.yaml
+        yq e ".image.tag = \"${{ env.IMAGE_TAG }}\"" -i values.yaml
         echo "Updated values.yaml:"
         cat values.yaml # For debugging: show the updated file content
 
@@ -99,7 +99,7 @@ jobs:
 
    # - name: Update Kubeconfig for EKS
     #  run: |
-          aws eks update-kubeconfig --name fss-Retail-App_kubernetes --region #ap-#south-1 # <-- IMPORTANT: Replace with your EKS CLUSTER NAME & REGION
+          #aws eks update-kubeconfig --name fss-Retail-App_kubernetes --region #ap-#south-1 # <-- IMPORTANT: Replace with your EKS CLUSTER NAME & REGION
  #         echo "Kubeconfig updated. Testing connection:"
   #        kubectl config view --minify
    #       kubectl get nodes
@@ -122,7 +122,7 @@ jobs:
  #         kubectl apply -f userprofile-deployment.yml # This contains your main app #deployment and its service
     
 #>>>>>>> 34d615d0fd67fb58af6ad3a111b2d6a13f4e575f
-          echo "Deployment successful!"
+          #echo "Deployment successful!"
 
 
 

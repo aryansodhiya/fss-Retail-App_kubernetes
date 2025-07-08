@@ -1,0 +1,65 @@
+# This YAML defines an Argo CD Application resource.
+# It tells Argo CD to synchronize your Helm chart from Git to your Kubernetes cluster.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # Name of your Argo CD Application. This will be visible in the Argo CD UI.
+  name: my-web-app
+  # The namespace where this Argo CD Application resource itself will live.
+  # This is usually the `argocd` namespace, or a namespace dedicated to Argo CD applications.
+  namespace: argocd
+spec:
+  # The project this application belongs to in Argo CD.
+  # 'default' is fine for most cases unless you've configured specific projects.
+  project: default
+
+  # Source configuration: where Argo CD finds your Helm chart.
+  source:
+    # The URL of your Git repository where the Helm chart is stored.
+    # Replace with your actual repository URL.
+    repoURL: https://github.com/aryansodhiya/fss-Retail-App_kubernetes/tree/master/Kubernetes/helm-charts.git
+    # The path within the Git repository where your Helm chart's root directory is located.
+    # For example, if your Chart.yaml is at 'your-git-repo/charts/my-web-app/Chart.yaml',
+    # then the path would be 'charts/my-web-app'.
+    path: Kubernetes/helm-charts# Assuming your chart is at the root of the repo, or specify the sub-path
+    # The target revision (branch, tag, or commit SHA) to deploy.
+    # 'HEAD' means the latest commit on the default branch (e.g., main/master).
+    targetRevision: HEAD
+    # Helm-specific configuration for the source.
+    helm:
+      # You can specify value files from your repository here.
+      # This is useful for environment-specific overrides (e.g., dev-values.yaml, prod-values.yaml).
+      # If not specified, Argo CD will use the default `values.yaml` in your chart.
+      # valueFiles:
+      #   - values-dev.yaml # Example for environment-specific values
+
+      # You can also pass individual parameters to override values.yaml.
+      # These are equivalent to `helm install --set key=value`.
+      # parameters:
+      #   - name: replicaCount
+      #     value: "3"
+      #   - name: image.tag
+      #     value: "v1.0.1"
+
+  # Destination configuration: where Argo CD will deploy your application in the Kubernetes cluster.
+  destination:
+    # The Kubernetes API server URL.
+    # For the cluster where Argo CD is installed, use 'https://kubernetes.default.svc'.
+    server: https://kubernetes.default.svc
+    # The namespace in the target cluster where your application should be deployed.
+    # Ensure this namespace exists or configure Argo CD to create it.
+    namespace: my-web-app-namespace # Replace with your desired application namespace
+
+  # Synchronization policy: how Argo CD should manage the application's state.
+  syncPolicy:
+    # Automated synchronization: Argo CD will automatically apply changes detected in Git.
+    automated:
+      # Prune: Allow Argo CD to delete resources that are no longer defined in Git.
+      prune: true
+      # SelfHeal: Allow Argo CD to revert manual changes made to resources in the cluster
+      # that differ from the Git state.
+      selfHeal: true
+    # Options for the sync operation.
+    syncOptions:
+      # CreateNamespace: If true, Argo CD will create the target namespace if it doesn't exist.
+      - CreateNamespace=true

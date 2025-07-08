@@ -1,43 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userprofile-deployment
+  name: {{ include "fss-retail-app.fullname" . }} # Use Helm helper for consistent naming
+  labels:
+    {{- include "fss-retail-app.labels" . | nindent 4 }} # Use Helm helper for consistent labels
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: userprofile
+      {{- include "fss-retail-app.selectorLabels" . | nindent 6 }} # Use Helm helper for selector labels
   template:
     metadata:
       labels:
-        app: userprofile
+        {{- include "fss-retail-app.selectorLabels" . | nindent 8 }} # Use Helm helper for pod labels
     spec:
       containers:
       - name: usernode-js
         image: aryansodhiya12122001/fss-retail-app_kubernetes:latest
         ports:
-        - containerPort: 3130  # Change to match your app's port
+        - containerPort: 3130
         env:
-        - name: MONGODB_URI
-          value: "mongodb://mongodb:27017/myDatabase"  # Match this to your MongoDB deployment
-        - name: SESSION_SECRET
-          value: "1234"
-        - name: EMAIL_USER
-          value: "chagantyteja2502@gmail.com"
-        - name: EMAIL_PASS
-          value: "yxoq bjuk rdnt alzp"
-        - name: PORT
-          value: "3130"    
---- 
+          # MONGODB_URI from Secret
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-atlas-uri-secret # Name of the Secret holding the Mongo
+                key: uri                      # Key within the Secret that holdstheur
+          # SESSION_SECRET from Secret
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: app-secrets             # Name of the Secret holding secrets
+                key: session_secret           # Key within the Secret for the secret
+          # EMAIL_USER from Secret (or could be a ConfigMap if not sensitive)
+          - name: EMAIL_USER
+            valueFrom:
+              secretKeyRef:
+                name: email-creds             # Name of the Secret holding credentials
+                key: email_user               # Key within the Secret for the emname
+          # EMAIL_PASS from Secret
+          - name: EMAIL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: email-creds             # Name of the Secret holding email cred
+                key: email_pass               # Key within the Secret for the email pw
+          # PORT can remain as a direct value or be pulled from a ConfigMap/Secret if
+          - name: PORT
+            value: "3130"
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: usernode-js-service
+  name: {{ include "fss-retail-app.fullname" . }}-service # Use Helm helper for service name
+  labels:
+    {{- include "fss-retail-app.labels" . | nindent 4 }} # Use Helm helper for consistent labels
 spec:
-  type: LoadBalancer  # Use NodePort if LoadBalancer is not supported
+  type: LoadBalancer # Keep LoadBalancer if your Minikube driver (like Docker) supports it
   ports:
     - port: 3130
       targetPort: 3130
       protocol: TCP
   selector:
-    app: userprofile
+    {{- include "fss-retail-app.selectorLabels" . | nindent 4 }} 

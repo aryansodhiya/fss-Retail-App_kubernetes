@@ -72,16 +72,16 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Update image tag in values.yaml
+      working-directory: ./Kubernetes/helm-charts
       run: |
-        working-directory: ./Kubernetes/helm-charts
         # Use yq to update the image.tag field in values.yaml
         yq e ".image.tag = \"${{ env.IMAGE_TAG }}\"" -i values.yaml
         echo "Updated values.yaml:"
         cat values.yaml # For debugging: show the updated file content
 
     - name: Commit and Push values.yaml
+      working-directory: ./Kubernetes/helm-charts
       run: |
-        working-directory: ./Kubernetes/helm-charts
         git add values.yaml
         git commit -m "chore(ci): Update image tag to ${{ env.IMAGE_TAG }}"
         git push

@@ -8,7 +8,7 @@ on:
     
 permissions:  # <--- Here, 'permissions' is at the top level, same as 'name' and 'on'
   id-token: write
-  contents: read
+  contents: write
   
 jobs:
   build-and-test: # Renamed job to reflect both build and test phases
@@ -72,6 +72,7 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Update image tag in values.yaml
+      if: ${{ exists('Kubernetes/helm-charts') }}
       working-directory: ./Kubernetes/helm-charts
       run: |
         # Use yq to update the image.tag field in values.yaml
@@ -79,12 +80,20 @@ jobs:
         echo "Updated values.yaml:"
         cat values.yaml # For debugging: show the updated file content
 
-    - name: Commit and Push values.yaml
+    - name: Commit values.yaml
       working-directory: ./Kubernetes/helm-charts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git add values.yaml
-        git commit -m "chore(ci): Update image tag to ${{ env.IMAGE_TAG }}"
-        git push
+        git commit -m "chore(ci): Update image tag to ${{ env.IMAGE_TAG }}" || echo "No changes to commit"
+
+    - name: Push values.yaml
+      working-directory: ./Kubernetes/helm-charts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push https://x-access-token:${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }} || echo "Push failed (possibly due to branch protection or permissions)"
 
 # --- EKS Deployment Steps ---
     # ... (previous steps like Build Docker image, Login to Docker Hub, Push Docker image) ...

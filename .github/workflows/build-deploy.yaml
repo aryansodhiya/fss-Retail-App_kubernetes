@@ -72,13 +72,16 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Update image tag in values.yaml
-      if: ${{ exists('Kubernetes/helm-charts') }}
       working-directory: ./Kubernetes/helm-charts
       run: |
-        # Use yq to update the image.tag field in values.yaml
-        yq e ".image.tag = \"${{ env.IMAGE_TAG }}\"" -i values.yaml
-        echo "Updated values.yaml:"
-        cat values.yaml # For debugging: show the updated file content
+        if [ -d "./Kubernetes/helm-charts" ]; then
+          # Use yq to update the image.tag field in values.yaml
+          yq e ".image.tag = \"${{ env.IMAGE_TAG }}\"" -i values.yaml
+          echo "Updated values.yaml:"
+          cat values.yaml # For debugging: show the updated file content
+        else
+          echo "Directory ./Kubernetes/helm-charts does not exist. Skipping update."
+        fi
 
     - name: Commit values.yaml
       working-directory: ./Kubernetes/helm-charts

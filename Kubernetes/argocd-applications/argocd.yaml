@@ -4,7 +4,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   # Name of your Argo CD Application. This will be visible in the Argo CD UI.
-  name: my-web-app
+  name: fss-retail-app
   # The namespace where this Argo CD Application resource itself will live.
   # This is usually the `argocd` namespace, or a namespace dedicated to Argo CD applications.
   namespace: argocd
@@ -17,11 +17,11 @@ spec:
   source:
     # The URL of your Git repository where the Helm chart is stored.
     # Replace with your actual repository URL.
-    repoURL: https://github.com/aryansodhiya/fss-Retail-App_kubernetes/tree/master/Kubernetes/helm-charts.git
+    repoURL: https://github.com/aryansodhiya/fss-Retail-App_kubernetes.git
     # The path within the Git repository where your Helm chart's root directory is located.
     # For example, if your Chart.yaml is at 'your-git-repo/charts/my-web-app/Chart.yaml',
     # then the path would be 'charts/my-web-app'.
-    path: Kubernetes/helm-charts# Assuming your chart is at the root of the repo, or specify the sub-path
+    path: https://github.com/aryansodhiya/fss-Retail-App_kubernetes/tree/master/Kubernetes# Assuming your chart is at the root of the repo, or specify the sub-path
     # The target revision (branch, tag, or commit SHA) to deploy.
     # 'HEAD' means the latest commit on the default branch (e.g., main/master).
     targetRevision: HEAD
@@ -48,7 +48,7 @@ spec:
     server: https://kubernetes.default.svc
     # The namespace in the target cluster where your application should be deployed.
     # Ensure this namespace exists or configure Argo CD to create it.
-    namespace: my-web-app-namespace # Replace with your desired application namespace
+    namespace: fss-retail-app # Replace with your desired application namespace
 
   # Synchronization policy: how Argo CD should manage the application's state.
   syncPolicy:

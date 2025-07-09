@@ -1,0 +1,17 @@
+# your-helm-chart/templates/email-creds.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: email-creds # This name MUST match your deployment's 'name: email-creds'
+  labels:
+    app.kubernetes.io/name: fss-retail-app
+    app.kubernetes.io/instance: {{ .Release.Name }}
+type: Opaque
+data:
+  # Key: email_user
+  # Value: aryansodhiya12122001@gmail.com
+  email_user: YXJ5YW5zb2RoaXlhMTIxMjIwMDFAZ21haWwuY29t
+
+  # Key: email_pass
+  # Value: Aryan@12345
+  email_pass: AWFyeWFuQDEyMzQ1

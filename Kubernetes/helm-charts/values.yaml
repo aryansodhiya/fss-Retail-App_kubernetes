@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
+mongodbAtlasUri: "Aryan%20Sodhiya:Aryan%400506@cluster1.2efxjmw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
 image:
   repository: aryansodhiya12122001/fss-retail-app_kubernetes
   pullPolicy: Always
@@ -11,5 +11,5 @@ image:
   tag: "latest"
 
 service:
-  type: LoadBalancer # From Service.spec.type
+  type: NodePort # From Service.spec.type
   port: 3130 

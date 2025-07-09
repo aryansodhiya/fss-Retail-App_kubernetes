@@ -6,16 +6,34 @@ const MongoStore = require('connect-mongo');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const path = require('path');
+const fs = require('fs'); // ADD THIS LINE if not already there
+const path = require('path');
 
 const app = express();
 app.use(express.json());
 
+const secretFilePath = path.join('/etc/secrets/mongo', 'uri'); // Path where the secret will be mounted
+let mongoURI;
+
+try {
+    // Read the URI from the mounted file
+    mongoURI = fs.readFileSync(secretFilePath, 'utf8').trim();
+    console.log('MongoDB URI successfully loaded from file system.');
+} catch (error) {
+    console.error('Error loading MongoDB URI from file system:', error);
+    // Fallback to environment variable or exit if file is essential
+    mongoURI = process.env.MONGODB_URI; // Fallback, but expect it to be problematic
+    if (!mongoURI) {
+        console.error('CRITICAL: MONGODB_URI environment variable and file not found. Cannot connect to MongoDB.');
+        process.exit(1); // Exit if no URI found
+    }
+}
 // Set up session management
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.session_secret,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    store: MongoStore.create({ mongoUrl: process.mongoURI }),
     cookie: { secure: false } // Change to true if using HTTPS
 }));
 
@@ -23,7 +41,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'Public')));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch((err) => console.error('MongoDB connection error:', err));
 

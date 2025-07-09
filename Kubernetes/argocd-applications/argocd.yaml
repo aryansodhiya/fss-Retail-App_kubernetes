@@ -21,7 +21,7 @@ spec:
     # The path within the Git repository where your Helm chart's root directory is located.
     # For example, if your Chart.yaml is at 'your-git-repo/charts/my-web-app/Chart.yaml',
     # then the path would be 'charts/my-web-app'.
-    path: https://github.com/aryansodhiya/fss-Retail-App_kubernetes/tree/master/Kubernetes# Assuming your chart is at the root of the repo, or specify the sub-path
+    path: Kubernetes/helm-charts # Assuming your chart is at the root of the repo, or specify the sub-path
     # The target revision (branch, tag, or commit SHA) to deploy.
     # 'HEAD' means the latest commit on the default branch (e.g., main/master).
     targetRevision: HEAD

@@ -7,7 +7,6 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs'); // ADD THIS LINE if not already there
-const path = require('path');
 
 const app = express();
 app.use(express.json());

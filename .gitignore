@@ -16,3 +16,4 @@
 .terraform.lock.hcl
 *.tfplan
 .terraform/plugins/
+.env

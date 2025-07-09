@@ -2,18 +2,21 @@ version: '3.8'
 
 services:
   frontend-app:
-    image: aryansodhiya12122001/fss-retail-app_kubernetes:latest # <--- CHANGE THIS LINE
+    image: services:
+  frontend-app:
+    image: aryansodhiya12122001/fss-retail-app_kubernetes:${IMAGE_TAG:-latest}
+    # ...# <--- CHANGE THIS LINE
     container_name: frontend-cont 
     ports:
       - '3130:3130'
     depends_on:
       - mongodb  
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/myDatabase
-      - SESSION_SECRET=1234
-      - PORT=3130
-      - EMAIL_USER=chagantyteja2502@gmail.com
-      - EMAIL_PASS=yxoq bjuk rdnt alzp
+      - PORT=${PORT}
+      - MONGODB_URI=${MONGODB_URI}
+      - session_secret=${session_secret}
+      - email_pass=${email_pass}
+      - email_user=${email_user}
   mongodb:
     image: mongo:latest 
     ports:

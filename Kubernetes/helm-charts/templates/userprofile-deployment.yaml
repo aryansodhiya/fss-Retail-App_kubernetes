@@ -55,7 +55,7 @@ metadata:
   labels:
     {{- include "fss-retail-app.labels" . | nindent 4 }} # Use Helm helper for consistent labels
 spec:
-  type: LoadBalancer # Keep LoadBalancer if your Minikube driver (like Docker) supports it
+  type: NodePort # Keep LoadBalancer if your Minikube driver (like Docker) supports it
   ports:
     - port: 3130
       targetPort: 3130

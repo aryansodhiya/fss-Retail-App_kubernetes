@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fss-retail-app.fullname" . }} # Use Helm helper for consistent naming
+  name: {{ include "fss-retail-app.fullname" . }}
   labels:
-    {{- include "fss-retail-app.labels" . | nindent 4 }} # Use Helm helper for consistent labels
+    {{- include "fss-retail-app.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "fss-retail-app.selectorLabels" . | nindent 6 }} # Use Helm helper for selector labels
+      {{- include "fss-retail-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "fss-retail-app.selectorLabels" . | nindent 8 }} # Use Helm helper for pod labels
+        {{- include "fss-retail-app.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: usernode-js
@@ -20,45 +20,47 @@ spec:
         ports:
         - containerPort: 3130
         env:
-          # MONGODB_URI from Secret
-          - name: MONGODB_URI
+          # MONGODB_URI from Secret (THIS WAS MISSING/COMMENTED OUT!)
+          - name: MONGODB_URI # This is the environment variable name inside the container
             valueFrom:
               secretKeyRef:
-                name: mongodb-atlas-uri-secret # Name of the Secret holding the Mongo
-                key: uri                      # Key within the Secret that holdstheur
+                name: mongodb-atlas-uri-secret # Name of your MongoDB URI secret
+                key: uri # This is the key within your secret
           # SESSION_SECRET from Secret
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
-                name: app-secrets             # Name of the Secret holding secrets
-                key: session_secret           # Key within the Secret for the secret
-          # EMAIL_USER from Secret (or could be a ConfigMap if not sensitive)
+                name: app-secrets
+                key: session_secret
+          # EMAIL_USER from Secret
           - name: EMAIL_USER
             valueFrom:
               secretKeyRef:
-                name: email-creds             # Name of the Secret holding credentials
-                key: email_user               # Key within the Secret for the emname
+                name: email-creds
+                key: email_user
           # EMAIL_PASS from Secret
           - name: EMAIL_PASS
             valueFrom:
               secretKeyRef:
-                name: email-creds             # Name of the Secret holding email cred
-                key: email_pass               # Key within the Secret for the email pw
-          # PORT can remain as a direct value or be pulled from a ConfigMap/Secret if
-          - name: PORT
+                name: email-creds
+                key: email_pass
+          # PORT can remain as a direct value
+          - name: PORT # Corrected: added space after hyphen
             value: "3130"
+      # NOTE: The 'volumeMounts' and 'volumes' sections for mongo-uri-volume
+      # are REMOVED here, as we are relying on the environment variable only.
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "fss-retail-app.fullname" . }}-service # Use Helm helper for service name
+  name: {{ include "fss-retail-app.fullname" . }}-service
   labels:
-    {{- include "fss-retail-app.labels" . | nindent 4 }} # Use Helm helper for consistent labels
+    {{- include "fss-retail-app.labels" . | nindent 4 }}
 spec:
-  type: NodePort # Keep LoadBalancer if your Minikube driver (like Docker) supports it
+  type: NodePort
   ports:
     - port: 3130
       targetPort: 3130
       protocol: TCP
   selector:
-    {{- include "fss-retail-app.selectorLabels" . | nindent 4 }} 
+    {{- include "fss-retail-app.selectorLabels" . | nindent 4 }}

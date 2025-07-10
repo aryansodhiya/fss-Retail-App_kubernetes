@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: usernode-js
-        image: aryansodhiya12122001/fss-retail-app_kubernetes:latest
-        imagePullPolicy: Always     
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # <--- CHANGED THIS LINE
+        imagePullPolicy: {{ .Values.image.pullPolicy }} #  
         command: ["/bin/sh", "-c"]
         args: ["npm start"]
         # --- END OF ADDITION ---

@@ -17,6 +17,10 @@ spec:
       containers:
       - name: usernode-js
         image: aryansodhiya12122001/fss-retail-app_kubernetes:latest
+        # --- ADDED COMMAND AND ARGS TO ENSURE LOG CAPTURE ---
+        command: ["/bin/sh", "-c"]
+        args: ["npm start"]
+        # --- END OF ADDITION ---
         ports:
         - containerPort: 3130
         env:

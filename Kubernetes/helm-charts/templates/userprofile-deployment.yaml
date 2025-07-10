@@ -21,6 +21,8 @@ spec:
         - containerPort: 3130
         env:
           # MONGODB_URI from Secret (THIS WAS MISSING/COMMENTED OUT!)
+          # We are now primarily using a volume mount for MONGODB_URI as per server.js logic.
+          # The environment variable is kept here as a fallback or if server.js is modified later.
           - name: MONGODB_URI # This is the environment variable name inside the container
             valueFrom:
               secretKeyRef:
@@ -45,10 +47,19 @@ spec:
                 name: email-creds
                 key: email_pass
           # PORT can remain as a direct value
-          - name: PORT # Corrected: added space after hyphen
+          - name: PORT
             value: "3130"
-      # NOTE: The 'volumeMounts' and 'volumes' sections for mongo-uri-volume
-      # are REMOVED here, as we are relying on the environment variable only.
+        volumeMounts: # ADDED: Volume mounts section
+          - name: mongo-uri-volume # This name must match a volume defined below
+            mountPath: "/etc/secrets/mongo" # Path inside the container where the secret will be mounted
+            readOnly: true # Secrets should typically be read-only
+      volumes: # ADDED: Volumes section (at the same level as 'containers')
+        - name: mongo-uri-volume # This name must match the volumeMount name
+          secret:
+            secretName: mongodb-atlas-uri-secret # Name of the Kubernetes Secret
+            items:
+              - key: uri # The key within the secret that contains the MongoDB URI
+                path: uri # The file name inside the 'mountPath' (e.g., /etc/secrets/mongo/uri)
 ---
 apiVersion: v1
 kind: Service

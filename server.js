@@ -22,17 +22,20 @@ try {
     console.error('Error loading MongoDB URI from file system:', error);
     // Fallback to environment variable or exit if file is essential
     mongoURI = process.env.MONGODB_URI; // Fallback, but expect it to be problematic
-    if (!mongoURI) {
+    if (mongoURI) {
+        mongoURI = mongoURI.trim(); // Trim any leading/trailing whitespace
+        console.log('MongoDB URI loaded from environment variable and trimmed.');
+    } else {
         console.error('CRITICAL: MONGODB_URI environment variable and file not found. Cannot connect to MongoDB.');
         process.exit(1); // Exit if no URI found
     }
 }
 // Set up session management
 app.use(session({
-    secret: process.env.session_secret,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.mongoURI }),
+    store: MongoStore.create({ mongoUrl: mongoURI }),
     cookie: { secure: false } // Change to true if using HTTPS
 }));
 

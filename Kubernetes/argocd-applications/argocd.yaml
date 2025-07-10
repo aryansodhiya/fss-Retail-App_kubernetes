@@ -48,7 +48,7 @@ spec:
     server: https://kubernetes.default.svc
     # The namespace in the target cluster where your application should be deployed.
     # Ensure this namespace exists or configure Argo CD to create it.
-    namespace: default # Replace with your desired application namespace
+    namespace: default 
 
   # Synchronization policy: how Argo CD should manage the application's state.
   syncPolicy:

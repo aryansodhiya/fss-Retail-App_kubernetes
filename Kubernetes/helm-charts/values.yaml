@@ -8,7 +8,7 @@ image:
   repository: aryansodhiya12122001/fss-retail-app_kubernetes
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "v1.0.1"
 
 service:
   type: NodePort # From Service.spec.type

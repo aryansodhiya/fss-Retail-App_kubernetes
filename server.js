@@ -128,7 +128,7 @@ app.post('/login', async (req, res) => {
             return res.json({ success: false, message: 'User not found' });
         }console.log("Password from form:", password);
 console.log("Hashed password from DB:", user.password);
-const validPassword = await bcrypt.compare(password, user.password);
+
 
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {

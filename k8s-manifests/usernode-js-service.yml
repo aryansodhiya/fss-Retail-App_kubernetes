@@ -4,7 +4,7 @@ metadata:
   name: usernode-js-service
   namespace: murali-ns
 spec:
-  type: ClusterIP  # Use NodePort if LoadBalancer is not supported
+  type: LoadBalancer  # Use NodePort if LoadBalancer is not supported
   ports:
     - port: 3130
       targetPort: 3130

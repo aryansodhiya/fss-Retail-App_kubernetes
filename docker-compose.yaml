@@ -1,27 +1,65 @@
 version: '3.8'
 
+
+
 services:
-  frontend-app:
-    image: services:
-  frontend-app:
-    image: aryansodhiya12122001/fss-retail-app_kubernetes:${IMAGE_TAG:-latest}
-    # ...# <--- CHANGE THIS LINE
-    container_name: frontend-cont 
-    ports:
-      - '3130:3130'
-    depends_on:
-      - mongodb  
-    environment:
-      - PORT=${PORT}
-      - MONGODB_URI=${MONGODB_URI}
-      - session_secret=${session_secret}
-      - email_pass=${email_pass}
-      - email_user=${email_user}
+
+  # 1. MongoDB Database Container
+
   mongodb:
-    image: mongo:latest 
+
+    image: mongo:latest
+
+    container_name: mongodb_container
+
+    restart: always
+
     ports:
-      - '27017:27017'
-    container_name: mongodb-cont
-    volumes:                      
-      # <--- Ensure this line is present and correctly i
-      - ./data:/data/db  
+
+      - "27017:27017"
+
+    environment:
+
+      - MONGO_INITDB_ROOT_USERNAME=admin
+
+      - MONGO_INITDB_ROOT_PASSWORD=password
+
+    volumes:
+
+      - mongo-data:/data/db
+
+
+
+  # 2. Your Node.js Application
+
+  app:
+
+    build: .
+
+    container_name: node_app_container
+
+    ports:
+
+      - "3130:3130"
+
+    depends_on:
+
+      - mongodb
+
+    env_file:
+
+      - .env
+
+    environment:
+
+      # This matches the URI we just defined
+
+      - MONGODB_URI=${MONGODB_URI}
+
+      - SESSION_SECRET=${SESSION_SECRET}
+
+
+
+volumes:
+
+  mongo-data:

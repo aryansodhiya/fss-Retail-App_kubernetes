@@ -35,4 +35,3 @@ volumes:
   mongo-data:
 
 
-will this owrk not hardcoding the uri and sessionsecret

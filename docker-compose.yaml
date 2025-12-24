@@ -28,6 +28,8 @@ services:
     environment:
       - MONGODB_URI=${MONGODB_URI}
       - SESSION_SECRET=${SESSION_SECRET}
+      - EMAIL_USER: ${EMAIL_USER}   # <--- Add this
+      - EMAIL_PASS: ${EMAIL_PASS}
 
 volumes:
   mongo-data:

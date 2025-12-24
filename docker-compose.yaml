@@ -1,65 +1,36 @@
 version: '3.8'
 
-
-
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
 
-  # 1. MongoDB Database Container
-
-  mongodb:
-
-    image: mongo:latest
-
-    container_name: mongodb_container
-
-    restart: always
-
-    ports:
-
-      - "27017:27017"
-
-    environment:
-
-      - MONGO_INITDB_ROOT_USERNAME=admin
-
-      - MONGO_INITDB_ROOT_PASSWORD=password
-
-    volumes:
-
-      - mongo-data:/data/db
-
-
-
-  # 2. Your Node.js Application
-
-  app:
-
-    build: .
-
-    container_name: node_app_container
-
-    ports:
-
-      - "3130:3130"
-
-    depends_on:
-
-      - mongodb
-
-    env_file:
-
-      - .env
-
-    environment:
-
-      # This matches the URI we just defined
-
-      - MONGODB_URI=${MONGODB_URI}
-
-      - SESSION_SECRET=${SESSION_SECRET}
-
-
+  app:
+    build: .
+    container_name: node_app_container
+    ports:
+      - "3130:3130"
+    depends_on:
+      - mongodb
+    # --- ADD THIS SECTION ---
+    volumes:
+      - .:/Capsule
+      - /Capsule/node_modules # Prevents local node_modules from overwriting container's modules
+    # ------------------------
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - SESSION_SECRET=${SESSION_SECRET}
 
 volumes:
+  mongo-data:
 
-  mongo-data:
+
+will this owrk not hardcoding the uri and sessionsecret

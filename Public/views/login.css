@@ -7,19 +7,22 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    background-image: url('../images/freshmartlogin.jpg'); /* Add a background image */
+    /* Ensure the path to your image is correct based on your Public folder structure */
+    background-image: url('../images/freshmartlogin.jpg'); 
     background-size: cover;
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #1e90ff; /* Bright blue background */
+    background-color: #1e90ff;
     color: #fff;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between; /* Space between brand and navigation */
-    align-items: center; /* Vertically align brand and nav */
+    justify-content: space-between;
+    align-items: center;
 }
 
 header .brand h1 {
@@ -32,11 +35,11 @@ nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; /* Flex layout for nav items */
+    display: flex;
 }
 
 nav ul li {
-    margin-left: 1rem; /* Space between nav items */
+    margin-left: 1rem;
 }
 
 nav ul li a {
@@ -48,22 +51,24 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #ffd700; /* Gold color on hover */
+    color: #ffd700;
 }
 
 .login-form {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Reduced width for a cleaner look */
+    margin: auto; /* Center vertically and horizontally with flex */
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.95); /* Slight transparency looks better over BG images */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .login-form h2 {
     margin-top: 0;
-    color: #1e90ff; /* Match header background */
+    color: #1e90ff;
     text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
 }
 
 .login-form label {
@@ -75,53 +80,54 @@ nav ul li a:hover {
 
 .login-form input {
     width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
+    padding: 0.85rem;
+    margin-bottom: 1.2rem;
     border: 1px solid #ddd;
-    border-radius: 12px; /* Rounded corners for input fields */
-    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+    border-radius: 8px; /* Consistent rounding */
+    box-sizing: border-box;
 }
 
 .login-form input:focus {
-    border-color: #1e90ff; /* Blue border on focus */
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* Light blue shadow */
+    border-color: #1e90ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
 }
 
 .login-form button {
     width: 100%;
-    padding: 0.75rem;
-    background-color: #1e90ff; /* Matching blue button */
+    padding: 0.85rem;
+    background-color: #1e90ff;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    margin-bottom: 1rem; /* Add space below each button */
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-#verify-otp {
-    margin-top: 1rem; /* Add space above the Verify OTP button */
-}
-
+/* Removed #verify-otp and otp related styles */
 
 .login-form button:hover {
-    background-color: #4682b4; /* Darker blue on hover */
+    background-color: #1565c0; /* Darker blue */
+}
+
+.login-form button:active {
+    transform: scale(0.98); /* Click effect */
 }
 
 #login-status {
-    color: #e74c3c; /* Red color for error messages */
     font-weight: bold;
     text-align: center;
     margin-top: 1rem;
+    min-height: 1.2em; /* Prevents layout jump when text appears */
 }
 
 footer {
-    background-color: #1e90ff; /* Matching blue footer */
+    background-color: #1e90ff;
     color: #fff;
     text-align: center;
     padding: 1rem;
     width: 100%;
-    margin-top: auto; /* Push footer to the bottom */
+    margin-top: auto;
 }
